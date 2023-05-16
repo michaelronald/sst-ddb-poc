@@ -1,19 +1,56 @@
 import { useState } from "react";
+import { Routes, Route, Outlet, BrowserRouter } from "react-router-dom";
 import {
   AppShell,
   Navbar,
   Header,
-  Text,
   MediaQuery,
   Burger,
   useMantineTheme,
+  Flex,
   Image,
+  MantineProvider,
+  ColorSchemeProvider,
+  ColorScheme,
+  ActionIcon,
+  useMantineColorScheme,
+  Stack,
 } from "@mantine/core";
+import {
+  Sun,
+  Moon,
+  LayoutDashboard,
+  Check,
+  ClipboardCheck,
+  DollarSign,
+  Users,
+  Building2,
+} from "lucide-react";
+import { NavbarLink } from "./components";
+import { Dashboard, NoMatch } from "./pages";
 import ChannlWorksLogo from "./assets/channlworks-logo.png";
+import { NAV_LINKS } from "./utils/enums";
 
-export default function AppShellDemo() {
+const links = [
+  { icon: LayoutDashboard, label: "Dashboard", to: NAV_LINKS.Dashboard },
+  { icon: Building2, label: "Vendors", to: NAV_LINKS.Vendors },
+  { icon: Check, label: "Programs", to: NAV_LINKS.Programs },
+  {
+    icon: ClipboardCheck,
+    label: "Training & Certification",
+    to: NAV_LINKS.Training_Certification,
+  },
+  { icon: DollarSign, label: "Payments", to: NAV_LINKS.Payments },
+  { icon: Users, label: "Customers", to: NAV_LINKS.Customers },
+];
+
+function Layout() {
   const theme = useMantineTheme();
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+
+  const [active, setActive] = useState(0);
   const [opened, setOpened] = useState(false);
+  const dark = colorScheme === "dark";
 
   return (
     <AppShell
@@ -32,22 +69,28 @@ export default function AppShellDemo() {
           p="md"
           hiddenBreakpoint="sm"
           hidden={!opened}
-          width={{ sm: 200, lg: 300 }}
+          width={{ base: 100 }}
         >
-          <Text>Changing my nav</Text>
+          <Navbar.Section grow mt={10}>
+            <Stack justify="center" spacing={20}>
+              {links.map((link, index) => (
+                <NavbarLink
+                  {...link}
+                  key={link.label}
+                  active={index === active}
+                  onClick={() => setActive(index)}
+                />
+              ))}
+            </Stack>
+          </Navbar.Section>
         </Navbar>
       }
       header={
-        <Header
-          height={{ base: 70, md: 90 }}
-          p="md"
-          style={{ background: theme.colors.dark[4] }}
-        >
-          <div
+        <Header height={{ base: 90, md: 110 }} p="lg">
+          <Flex
             style={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
               height: "100%",
             }}
           >
@@ -60,12 +103,63 @@ export default function AppShellDemo() {
                 mr="xl"
               />
             </MediaQuery>
-            <Image src={ChannlWorksLogo} width={300} />
-          </div>
+            <Flex
+              direction="row"
+              align="center"
+              justify="space-between"
+              style={{ width: "100%" }}
+            >
+              <Image src={ChannlWorksLogo} width={180} alt="ChannlWorks logo" />
+              <ActionIcon
+                variant="transparent"
+                color={dark ? "yellow" : "blue"}
+                onClick={() => toggleColorScheme()}
+                title="Toggle color scheme"
+              >
+                {dark ? <Sun /> : <Moon />}
+              </ActionIcon>
+            </Flex>
+          </Flex>
         </Header>
       }
     >
-      <Text>Resize app to see responsive navbar in action</Text>
+      <Outlet />
     </AppShell>
+  );
+}
+
+export default function App() {
+  const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+
+  return (
+    <BrowserRouter>
+      <ColorSchemeProvider
+        colorScheme={colorScheme}
+        toggleColorScheme={toggleColorScheme}
+      >
+        <MantineProvider
+          theme={{ colorScheme }}
+          withGlobalStyles
+          withNormalizeCSS
+        >
+          <Routes>
+            <Route path={NAV_LINKS.Dashboard} element={<Layout />}>
+              <Route index element={<Dashboard />} />
+              <Route path={NAV_LINKS.Vendors} element={<Dashboard />} />
+              <Route path={NAV_LINKS.Programs} element={<Dashboard />} />
+              <Route
+                path={NAV_LINKS.Training_Certification}
+                element={<Dashboard />}
+              />
+              <Route path={NAV_LINKS.Payments} element={<Dashboard />} />
+              <Route path={NAV_LINKS.Customers} element={<Dashboard />} />
+              <Route path="*" element={<NoMatch />} />
+            </Route>
+          </Routes>
+        </MantineProvider>
+      </ColorSchemeProvider>
+    </BrowserRouter>
   );
 }
