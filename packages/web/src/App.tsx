@@ -27,9 +27,17 @@ import {
   Building2,
 } from "lucide-react";
 import { NavbarLink } from "./components";
-import { Dashboard, NoMatch } from "./pages";
+import {
+  Customers,
+  Dashboard,
+  NoMatch,
+  Payments,
+  Programs,
+  TrainingAndCertification,
+  Vendors,
+} from "./pages";
 import ChannlWorksLogo from "./assets/channlworks-logo.png";
-import { NAV_LINKS } from "./utils/enums";
+import { NAV_LINKS } from "./utils/constants";
 
 const links = [
   { icon: LayoutDashboard, label: "Dashboard", to: NAV_LINKS.Dashboard },
@@ -38,7 +46,7 @@ const links = [
   {
     icon: ClipboardCheck,
     label: "Training & Certification",
-    to: NAV_LINKS.Training_Certification,
+    to: NAV_LINKS.TrainingAndCertification,
   },
   { icon: DollarSign, label: "Payments", to: NAV_LINKS.Payments },
   { icon: Users, label: "Customers", to: NAV_LINKS.Customers },
@@ -51,6 +59,10 @@ function Layout() {
   const [active, setActive] = useState(0);
   const [opened, setOpened] = useState(false);
   const dark = colorScheme === "dark";
+
+  const API_URL = import.meta.env.VITE_APP_API_URL;
+
+  console.log("API", API_URL);
 
   return (
     <AppShell
@@ -147,14 +159,14 @@ export default function App() {
           <Routes>
             <Route path={NAV_LINKS.Dashboard} element={<Layout />}>
               <Route index element={<Dashboard />} />
-              <Route path={NAV_LINKS.Vendors} element={<Dashboard />} />
-              <Route path={NAV_LINKS.Programs} element={<Dashboard />} />
+              <Route path={NAV_LINKS.Vendors} element={<Vendors />} />
+              <Route path={NAV_LINKS.Programs} element={<Programs />} />
               <Route
-                path={NAV_LINKS.Training_Certification}
-                element={<Dashboard />}
+                path={NAV_LINKS.TrainingAndCertification}
+                element={<TrainingAndCertification />}
               />
-              <Route path={NAV_LINKS.Payments} element={<Dashboard />} />
-              <Route path={NAV_LINKS.Customers} element={<Dashboard />} />
+              <Route path={NAV_LINKS.Payments} element={<Payments />} />
+              <Route path={NAV_LINKS.Customers} element={<Customers />} />
               <Route path="*" element={<NoMatch />} />
             </Route>
           </Routes>

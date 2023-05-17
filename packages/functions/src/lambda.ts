@@ -3,6 +3,6 @@ import { Time } from "@dashboard/core/time";
 
 export const handler = ApiHandler(async (_evt) => {
   return {
-    body: `Hello world. The time is ${Time.now()}.`,
+    body: `Hello world. I guess the time is ${Time.now()}?`,
   };
 });
