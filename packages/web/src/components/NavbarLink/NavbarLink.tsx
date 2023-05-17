@@ -42,7 +42,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function NavbarLink({
+export default function NavbarLink({
   icon: Icon,
   label,
   to,

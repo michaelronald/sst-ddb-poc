@@ -7,7 +7,6 @@
     "typecheck": "tsc -noEmit"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.1",
     "@types/aws-lambda": "^8.10.115",
     "@types/node": "^20.1.5",
     "sst": "^2.8.22",

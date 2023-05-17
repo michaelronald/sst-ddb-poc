@@ -9,7 +9,9 @@ export function API({ stack }: StackContext) {
       },
     },
     routes: {
-      "GET /": "packages/functions/src/lambda.handler",
+      "GET /list-vendors": "packages/functions/src/get-vendors/lambda.handler",
+      "POST /create-vendor":
+        "packages/functions/src/create-vendor/lambda.handler",
     },
   });
 

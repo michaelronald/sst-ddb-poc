@@ -1,3 +1,3 @@
-import { NavbarLink } from "./Layout/NavbarLink";
+import NavbarLink from "./NavbarLink/NavbarLink";
 
 export { NavbarLink };
