@@ -20,11 +20,13 @@
     "@mantine/nprogress": "^6.0.10",
     "@mantine/spotlight": "^6.0.10",
     "@tanstack/react-query": "^4.29.7",
+    "axios": "^1.4.0",
     "dayjs": "^1.11.7",
     "lucide-react": "^0.216.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.11.1"
+    "react-router-dom": "^6.11.1",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

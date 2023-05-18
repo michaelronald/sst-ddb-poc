@@ -1,5 +1,5 @@
 import { createStyles, rem, Tooltip, UnstyledButton } from "@mantine/core";
-import { Link } from "react-router-dom";
+import { NavLink, useMatch } from "react-router-dom";
 
 interface NavbarLinkProps {
   icon: React.FC<any>;
@@ -42,25 +42,19 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function NavbarLink({
-  icon: Icon,
-  label,
-  to,
-  active,
-  onClick,
-}: NavbarLinkProps) {
+export default function NavbarLink({ icon: Icon, label, to }: NavbarLinkProps) {
   const { classes, cx } = useStyles();
+  const match = useMatch(to);
 
   return (
     <Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
-      <Link to={to}>
+      <NavLink to={to}>
         <UnstyledButton
-          onClick={onClick}
-          className={cx(classes.link, { [classes.active]: active })}
+          className={cx(classes.link, { [classes.active]: Boolean(match) })}
         >
           <Icon size={20} />
         </UnstyledButton>
-      </Link>
+      </NavLink>
     </Tooltip>
   );
 }

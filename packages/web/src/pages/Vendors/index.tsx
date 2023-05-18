@@ -1,7 +1,3 @@
-export default function Vendors() {
-  return (
-    <div>
-      <h2>Vendors</h2>
-    </div>
-  );
-}
+import Vendors from "./Vendors";
+
+export default Vendors;

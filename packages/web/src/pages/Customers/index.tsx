@@ -1,7 +1,3 @@
-export default function Customers() {
-  return (
-    <div>
-      <h2>Customers</h2>
-    </div>
-  );
-}
+import Customers from "./Customers";
+
+export default Customers;

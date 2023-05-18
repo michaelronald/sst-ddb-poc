@@ -2,14 +2,14 @@ import crypto from "crypto";
 import { ApiHandler } from "sst/node/api";
 import { dynamodb } from "@dashboard/core/dynamodb";
 
-interface Vendor {
+type Vendor = {
   vendorName: string;
   description: string;
   contactPerson: string;
   contactEmail: string;
   contactPhone: string;
   status: "active" | "disabled";
-}
+};
 
 export const handler = ApiHandler(async (event) => {
   try {
@@ -34,6 +34,7 @@ export const handler = ApiHandler(async (event) => {
     });
 
     return {
+      statusCode: 200,
       body: JSON.stringify({
         message: "Success: Vendor creation successful.",
       }),

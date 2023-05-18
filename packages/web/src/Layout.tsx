@@ -1,17 +1,15 @@
-import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import {
   AppShell,
   Navbar,
   Header,
-  MediaQuery,
-  Burger,
   useMantineTheme,
   Flex,
   Image,
   ActionIcon,
   useMantineColorScheme,
   Stack,
+  Box,
 } from "@mantine/core";
 import { Sun, Moon } from "lucide-react";
 import { NavbarLink } from "./components";
@@ -22,8 +20,6 @@ export function Layout() {
   const theme = useMantineTheme();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
 
-  const [active, setActive] = useState(0);
-  const [opened, setOpened] = useState(false);
   const dark = colorScheme === "dark";
 
   return (
@@ -36,24 +32,12 @@ export function Layout() {
               : theme.colors.gray[0],
         },
       }}
-      navbarOffsetBreakpoint="sm"
-      asideOffsetBreakpoint="sm"
       navbar={
-        <Navbar
-          p="md"
-          hiddenBreakpoint="sm"
-          hidden={!opened}
-          width={{ base: 100 }}
-        >
+        <Navbar p="lg" width={{ base: 100 }}>
           <Navbar.Section grow mt={10}>
             <Stack justify="center" spacing={20}>
-              {NAV_LINKS.map((link, index) => (
-                <NavbarLink
-                  {...link}
-                  key={link.label}
-                  active={index === active}
-                  onClick={() => setActive(index)}
-                />
+              {NAV_LINKS.map((link) => (
+                <NavbarLink {...link} key={link.label} />
               ))}
             </Stack>
           </Navbar.Section>
@@ -68,15 +52,6 @@ export function Layout() {
               height: "100%",
             }}
           >
-            <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-              <Burger
-                opened={opened}
-                onClick={() => setOpened((o) => !o)}
-                size="sm"
-                color={theme.colors.gray[6]}
-                mr="xl"
-              />
-            </MediaQuery>
             <Flex
               direction="row"
               align="center"
@@ -97,7 +72,9 @@ export function Layout() {
         </Header>
       }
     >
-      <Outlet />
+      <Box mt={20} mx={20}>
+        <Outlet />
+      </Box>
     </AppShell>
   );
 }

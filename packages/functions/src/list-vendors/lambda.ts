@@ -5,11 +5,11 @@ export const handler = ApiHandler(async (event) => {
   try {
     const vendors = await dynamodb.Query("VENDOR");
 
-    console.log(vendors);
-
     return {
+      statusCode: 200,
       body: JSON.stringify({
         message: "Vendor retrieval successful.",
+        data: vendors,
       }),
     };
   } catch (error) {
